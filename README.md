@@ -1,3 +1,9 @@
+### GIT CLONE
+
+`git clone --branch task1 https://github.com/heliosgrounder/MLCV.git`
+
+---
+
 ### CREATE VIRTUAL ENVIRONMENT
 
 make sure that you are in the root folder of project
