@@ -40,6 +40,11 @@ jobs:
     - name: Build Package
       run: |
         poetry build
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: dist
+        path: dist/
     # - name: Test with pytest
     #   run: |
     #     pytest
