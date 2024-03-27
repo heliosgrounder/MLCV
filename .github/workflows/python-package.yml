@@ -16,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.8", "3.9", "3.10", "3.11"]
+        python-version: ["3.8"]
 
     steps:
     - uses: actions/checkout@v3
@@ -45,6 +45,17 @@ jobs:
       with:
         name: dist
         path: dist/
+    - name: Commit dist files
+      run: |
+        git config --local user.email "yuldoshev.amir@gmail.com"
+        git config --local user.name "heliosgrounder"
+        git add dist/
+        git commit -m "Add dist files for Python" -a || echo "No changes to commit"
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.MY_GITHUB_TOKEN }}
+        branch: "task2"
     # - name: Test with pytest
     #   run: |
     #     pytest
