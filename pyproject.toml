@@ -5,6 +5,12 @@ description = "HELIOS"
 authors = ["heliosgrounder"]
 readme = "README.md"
 
+include = [
+  { path = ".pre-commit-config.yaml", format = ["sdist", "wheel"] },
+  { path = "setup.cfg", format = ["sdist", "wheel"] },
+  { path = "hooks", format = ["sdist", "wheel"] }
+]
+
 [tool.poetry.dependencies]
 python = ">=3.8,<3.12"
 pillow = "10.2.0"
