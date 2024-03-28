@@ -4,15 +4,14 @@ import time
 
 import cv2
 import numpy as np
+import tensorflow as tf
 from PIL import Image
 
-print()
-
-try:
-    from tflite_runtime.interpreter import Interpreter
-except:
-    # from tensorflow.lite.python.interpreter import Interpreter
-    import tensorflow as tf
+# try:
+#     from tflite_runtime.interpreter import Interpreter
+# except:
+#     # from tensorflow.lite.python.interpreter import Interpreter
+#     import tensorflow as tf
 
 fps = ""
 framecount = 0
@@ -31,8 +30,18 @@ if __name__ == "__main__":
         help="Path of the deeplabv3plus model.",
     )
     parser.add_argument("--usbcamno", type=int, default=0, help="USB Camera number.")
-    parser.add_argument("--camera_width", type=int, default=640, help="USB Camera resolution (width). (Default=640)")
-    parser.add_argument("--camera_height", type=int, default=480, help="USB Camera resolution (height). (Default=480)")
+    parser.add_argument(
+        "--camera_width",
+        type=int,
+        default=640,
+        help="USB Camera resolution (width). (Default=640)",
+    )
+    parser.add_argument(
+        "--camera_height",
+        type=int,
+        default=480,
+        help="USB Camera resolution (height). (Default=480)",
+    )
     parser.add_argument("--vidfps", type=int, default=30, help="FPS of Video. (Default=30)")
     parser.add_argument("--num_threads", type=int, default=4, help="Threads.")
     args = parser.parse_args()
@@ -45,17 +54,13 @@ if __name__ == "__main__":
     num_threads = args.num_threads
 
     # interpreter = Interpreter(model_path=deep_model, num_threads=num_threads)
-    try:
-        # interpreter.set_num_threads(num_threads)
-        interpreter = Interpreter(model_path=deep_model, num_threads=num_threads)
-    except:
-        interpreter = tf.lite.Interpreter(model_path=deep_model, num_threads=num_threads)
-        # print("WARNING: The installed PythonAPI of Tensorflow/Tensorflow Lite runtime does not support Multi-Thread processing.")
-        # print("WARNING: It works in single thread mode.")
-        # print("WARNING: If you want to use Multi-Thread to improve performance on aarch64/armv7l platforms, please refer to one of the below to implement a customized Tensorflow/Tensorflow Lite runtime.")
-        # print("https://github.com/PINTO0309/Tensorflow-bin.git")
-        # print("https://github.com/PINTO0309/TensorflowLite-bin.git")
-        # pass
+    interpreter = tf.lite.Interpreter(model_path=deep_model, num_threads=num_threads)
+    # try:
+    #     # interpreter.set_num_threads(num_threads)
+    #     interpreter = Interpreter(model_path=deep_model, num_threads=num_threads)
+    # except:
+    #     interpreter = tf.lite.Interpreter(model_path=deep_model, num_threads=num_threads)
+    # pass
     interpreter.allocate_tensors()
     input_details = interpreter.get_input_details()[0]["index"]
     deeplabv3_predictions = interpreter.get_output_details()[0]["index"]
@@ -76,7 +81,7 @@ if __name__ == "__main__":
         ret, color_image = cam.read()
         try:
             color_image.shape
-        except:
+        except Exception:
             break
         if not ret:
             continue
@@ -108,7 +113,14 @@ if __name__ == "__main__":
 
         # cv2.putText(imdraw, fps, (camera_width-170,15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (38,0,255), 1, cv2.LINE_AA)
         cv2.putText(
-            imdraw, fps, (color_image.shape[1] - 170, 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (38, 0, 255), 1, cv2.LINE_AA
+            imdraw,
+            fps,
+            (color_image.shape[1] - 170, 15),
+            cv2.FONT_HERSHEY_SIMPLEX,
+            0.5,
+            (38, 0, 255),
+            1,
+            cv2.LINE_AA,
         )
         cv2.imshow(window_name, imdraw)
 

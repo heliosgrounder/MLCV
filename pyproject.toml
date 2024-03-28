@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "helios_package"
-version = "0.1.38"
-description = "TEST"
+version = "0.2.38"
+description = "HELIOS"
 authors = ["heliosgrounder"]
 readme = "README.md"
 
@@ -12,6 +12,10 @@ numpy = "1.24.3"
 opencv-python = "4.7.0.72"
 tensorflow-io-gcs-filesystem = "0.31.0"
 tensorflow = "2.13.0"
+black = "24.3.0"
+isort = "5.13.2"
+flake8 = "7.0.0"
+pre-commit = "3.7.0"
 
 
 
@@ -33,10 +37,12 @@ exclude = '''
   | \.mypy_cache
   | \.tox
   | \.venv
+  | \.github
   | _build
   | buck-out
   | build
   | dist
+  | hooks
 )/
 '''
 
