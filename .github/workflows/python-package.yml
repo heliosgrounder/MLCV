@@ -6,6 +6,8 @@ name: Python package
 on:
   push:
     branches: [ "task2" ]
+  merge-request:
+    branches: [ "task2" ]
   pull_request:
     branches: [ "task2" ]
 
