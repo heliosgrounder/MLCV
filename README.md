@@ -1,3 +1,5 @@
+## FOR LOCAL TESTING
+
 ### GIT CLONE
 
 `git clone --branch task2 https://github.com/heliosgrounder/MLCV.git`
@@ -39,6 +41,12 @@ Any platform `cd helios_package-0.1.38`
 Any platform `pip install .`
 
 ---
+
+### ADD EMPTY GIT REPOSITORY AND ADD FILES
+
+Any platform `git init`
+
+Any platform `git add .`
 
 ### RUN PRE-COMMIT
 
