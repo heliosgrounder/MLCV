@@ -1,6 +1,6 @@
 ### GIT CLONE
 
-`git clone --branch task1 https://github.com/heliosgrounder/MLCV.git`
+`git clone --branch task2 https://github.com/heliosgrounder/MLCV.git`
 
 ---
 
@@ -40,8 +40,8 @@ Any platform `pip install .`
 
 ---
 
-### RUN DEMO
+### RUN PRE-COMMIT
 
-Get to the script `cd helios_package`
+Run `pre-commit run -a`
 
-And run `python3 demo.py`
+Check if all steps are passed.

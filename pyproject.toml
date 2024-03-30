@@ -22,8 +22,8 @@ tensorflow = "2.13.0"
 black = "24.3.0"
 isort = "5.13.2"
 flake8 = "7.0.0"
-pre-commit = "3.7.0"
-
+pre-commit = "3.5.0"
+pytest = "8.1.1"
 
 
 [build-system]
