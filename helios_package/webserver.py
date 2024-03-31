@@ -1,24 +1,30 @@
 import cv2
 import numpy as np
-import pytest
-import tensorflow as tf
+# import tensorflow as tf
+from tflite_runtime.interpreter import Interpreter
 from PIL import Image
+import streamlit as st
 
+uploaded_file = st.file_uploader("Choose a image file (png)", type="png")
 
-def demo():
+if uploaded_file is not None:
+    # Convert the file to an opencv image.
+    file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
+    color_image = cv2.imdecode(file_bytes, 1)
+
     DEEPLAB_PALETTE = Image.open("helios_package/colorpalette.png").getpalette()
 
     deep_model = "helios_package/deeplab_v3_plus_mnv2_decoder_256_integer_quant.tflite"
     num_threads = 4
-    file_name = "test/src/picture.png"
+    # file_name = "test/picture.png"
 
-    interpreter = tf.lite.Interpreter(model_path=deep_model, num_threads=num_threads)
+    # interpreter = tf.lite.Interpreter(model_path=deep_model, num_threads=num_threads)
+    interpreter = Interpreter(model_path=deep_model, num_threads=num_threads)
 
     interpreter.allocate_tensors()
     input_details = interpreter.get_input_details()[0]["index"]
     deeplabv3_predictions = interpreter.get_output_details()[0]["index"]
 
-    color_image = cv2.imread(file_name)
 
     # Normalization
     prepimg_deep = cv2.resize(color_image, (256, 256))
@@ -56,10 +62,6 @@ def demo():
         1,
         cv2.LINE_AA,
     )
-    return imdraw
 
-
-def test_regression():
-    image = demo()
-    test_image = cv2.imread("test/src/test.png")
-    assert image.shape == test_image.shape and not (np.bitwise_xor(image, test_image).any())
+    # Now do something with the image! For example, let's display it:
+    st.image(imdraw, channels="BGR")
