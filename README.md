@@ -8,7 +8,7 @@
 
 ### DOCKER BUILD
 
-run `docker build -t <name_of_docker_image>`
+run `docker build -t <name_of_docker_image> .`
 
 wait some time...
 
